@@ -53,7 +53,6 @@ class CfgWeapons
 	class OPTRE_LongRifle_Base;
 	class UGL_F;
     class OPTRE_M7S;
-    class VES_M7_I;
     class OPTRE_SubMachineGun_Base;
     class Grenadelauncher;
     class ThrowMuzzle;
