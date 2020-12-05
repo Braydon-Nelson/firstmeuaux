@@ -368,6 +368,21 @@ class CfgMagazines
         initSpeed = 9;
     };
 	
+	class MEU_Fury_Mag : OPTRE_M9_Frag
+    {
+        author = "1st MEU Oneill";
+        scope = 2;
+        scopeArsenal = 2;
+        displayName = "[1st MEU] Throwable Fury Tactical Nuclear Weapon";
+		ammo = "MEU_Havoc_ammo_thrown";
+		model = "\OPTRE_weapons\backpacks\fury.p3d";
+		picture = "\OPTRE_weapons\backpacks\icons\icon_b_fury_nuke_ca.paa";
+		mass = 40;
+        descriptionShort = "Fury Tactical Nuclear Weapon";
+		displayNameShort = "Fury";
+        initSpeed = 9;
+    };
+	
 	class OPTRE_60Rnd_5x23mm_Mag_FMJ: OPTRE_60Rnd_5x23mm_Mag
 	{
 		dlc = "SO";
