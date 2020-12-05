@@ -13146,7 +13146,7 @@ class Pilot_Recruit: 1MEU_BASE_Pilot_Armor
 			dispersion = 0.0030;
 		};
 	};
-	
+	//is this thing working?
 	class OPTRE_BR55HB: OPTRE_Rifle_Base
 	{
 		modes[] = 
