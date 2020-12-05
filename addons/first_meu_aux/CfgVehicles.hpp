@@ -158,7 +158,7 @@ class CfgVehicles
         vehicleClass = "Items";
         class TransportItems 
         {
-            item_xx(MEU_Ibuprophen,1);
+            item_xx(MEU_compat_Ibuprofen,1);
         };
         mass = 20
     };
