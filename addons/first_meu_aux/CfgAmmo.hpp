@@ -49,6 +49,7 @@ class CfgAmmo
 		whistleDist = 10;
         initSpeed = 15;
     };
+	
     class MEU_c12_remote_ammo_thrown : ACE_SatchelCharge_Remote_Ammo_Thrown
     {
         scope = 1;
@@ -67,11 +68,13 @@ class CfgAmmo
         whistleDist = 10;
         initSpeed = 9;
     };
+	
     class MEU_9bang : ACE_G_CTS9
     {
         explosionTime = 1.5;
         ace_flashbang_Interval = 0.1;
     };
+	
     class MEU_C168_ammo_thrown : ACE_SatchelCharge_Remote_Ammo_Thrown
     {
         scope = 1;
@@ -80,6 +83,25 @@ class CfgAmmo
 		indirectHitRange = 10;
 		defaultMagazine = "MEU_C168_Mag"; 
 		model = "\OPTRE_Weapons\charges\m168g.p3d";
+        timeToLive = 15;
+        fuseDistance = 0;
+        explosionTime = 12;
+        deflectionSlowDown = 0.1;
+        ExplosionEffects = "MineNondirectionalExplosion";
+		CraterEffects = "MineNondirectionalCrater";
+		SoundSetExplosion[] = {"BigIED_Exp_SoundSet","BigIED_Tail_SoundSet","Explosion_Debris_SoundSet"};
+        whistleDist = 10;
+        initSpeed = 9;
+    };
+	
+	class MEU_Fury_ammo_thrown : ACE_SatchelCharge_Remote_Ammo_Thrown
+    {
+        scope = 1;
+        hit = 100000;
+		indirectHit = 100000;
+		indirectHitRange = 10000;
+		defaultMagazine = "MEU_Fury_Mag"; 
+		model = "\OPTRE_weapons\backpacks\fury.p3d";
         timeToLive = 15;
         fuseDistance = 0;
         explosionTime = 12;
