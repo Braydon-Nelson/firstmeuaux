@@ -371,8 +371,8 @@ class CfgMagazines
 	class MEU_Fury_Mag : OPTRE_M9_Frag
     {
         author = "1st MEU Oneill";
-        scope = 2;
-        scopeArsenal = 2;
+        scope = 1;
+        scopeArsenal = 1;
         displayName = "[1st MEU] Throwable Fury Tactical Nuclear Weapon";
 		ammo = "MEU_Havoc_ammo_thrown";
 		model = "\OPTRE_weapons\backpacks\fury.p3d";
