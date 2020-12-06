@@ -1894,7 +1894,7 @@ class CfgVehicles
         tf_dialogUpdate = "call TFAR_fnc_updateLRDialogToChannel;";
         tf_hasLRradio = 1;
         picture="\OPTRE_weapons\backpacks\icons\icon_jetpack_ca.paa";
-		model="\OPTRE_weapons\backpacks\jetpack.p3d";
+		model="\OPTRE_weapons\backpacks\jetpack_on.p3d";
 		NSM_jumppack_is_jumppack = 1;
 		NSM_jumppack_spam_delay = 1;
 		NSM_jumppack_energy_capacity = 100;
@@ -1904,7 +1904,7 @@ class CfgVehicles
 		NSM_jumppack_sound_ignite[] = {"NSM_Main\sounds\cdv21Start.ogg"};
 		NSM_jumppack_sound_land[] = {"NSM_Main\sounds\cdv21End.ogg"};
 		NSM_jumppack_sound_idle[] = {"NSM_Main\sounds\cdv21Idle.ogg"};
-		NSM_jumppack_jump_types[] = {{"Short Jump",{25,7,20,0,1,1}}};
+		NSM_jumppack_jump_types[] = {{"Short Jump",{14,7,20,0,1,1}}};
 		maximumload = 100;
 		hiddenSelections[] = {"camo1"};
 		hiddenSelectionsTextures[] = {"NSM_Objects\Data\XD_1_JumpPack_CO.paa"};
@@ -1928,13 +1928,13 @@ class CfgVehicles
 		NSM_jumppack_is_jumppack = 1;
 		NSM_jumppack_spam_delay = 1;
 		NSM_jumppack_energy_capacity = 100;
-		NSM_jumppack_recharge = 3;
+		NSM_jumppack_recharge = 1;
 		NSM_jumppack_jump_effect_script = "NSM_jumppack_effect_fnc_jt_21";
 		NSM_jumppack_effect_points[] = {{"spine3",{0,-0.3,-0.1}}};
 		NSM_jumppack_sound_ignite[] = {"NSM_Main\sounds\cdv21Start.ogg"};
 		NSM_jumppack_sound_land[] = {"NSM_Main\sounds\cdv21End.ogg"};
 		NSM_jumppack_sound_idle[] = {"NSM_Main\sounds\cdv21Idle.ogg"};
-		NSM_jumppack_jump_types[] = {{"Short Jump",{25,7,20,0,1,1}}};
+		NSM_jumppack_jump_types[] = {{"Short Jump",{14,7,20,0,1,1}}};
 		maximumload = 300;
 		hiddenSelections[] = {"camo1"};
 		hiddenSelectionsTextures[] = {"NSM_Objects\Data\XD_1_JumpPack_CO.paa"};
@@ -1964,14 +1964,14 @@ class CfgVehicles
 		NSM_jumppack_sound_ignite[] = {"NSM_Main\sounds\cdv21Start.ogg"};
 		NSM_jumppack_sound_land[] = {"NSM_Main\sounds\cdv21End.ogg"};
 		NSM_jumppack_sound_idle[] = {"NSM_Main\sounds\cdv21Idle.ogg"};
-		NSM_jumppack_jump_types[] = {{"Forward Jump",{12,20,50,0,0,0}},{"Short Jump",{25,7,20,0,1,1}}};
-		maximumload = 200;
+		NSM_jumppack_jump_types[] = {{"Forward Jump",{12,20,25,0,0,0}},{"Short Jump",{14,7,10,0,1,1}}};
+		maximumload = 100;
 		hiddenSelections[] = {"camo1"};
 		hiddenSelectionsTextures[] = {"NSM_Objects\Data\XD_1_JumpPack_CO.paa"};
     };
     class MEU_Cent_Pack : Praetor_Jumpack
     {
-        author = "NSM (Namenai) & Oneill & Mark";
+        author = "NSM & Oneill & Mark";
         scope = 2;
 		scopeCurator = 2;
         scopeArsenal = 2;
@@ -1987,8 +1987,8 @@ class CfgVehicles
 		NSM_jumppack_sound_ignite[] = {"NSM_Main\sounds\cdv21Start.ogg"};
 		NSM_jumppack_sound_land[] = {"NSM_Main\sounds\cdv21End.ogg"};
 		NSM_jumppack_sound_idle[] = {"NSM_Main\sounds\cdv21Idle.ogg"};
-		NSM_jumppack_jump_types[] = {{"Forward Jump",{12,20,50,0,0,0}},{"Short Jump",{25,7,20,0,1,1}}};
-		maximumload = 200;
+		NSM_jumppack_jump_types[] = {{"Forward Jump",{12,20,25,0,0,0}},{"Short Jump",{14,7,10,0,1,1}}};
+		maximumload = 100;
 		hiddenSelections[] = {"camo1"};
 		hiddenSelectionsTextures[] = {"NSM_Objects\Data\XD_1_JumpPack_CO.paa"};
     };
