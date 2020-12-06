@@ -128,12 +128,6 @@ class CfgEditorCategories
         scopeCurator = 2;
         scopeeditor = 2;
     };
-	class MEU_flags
-    {   
-        displayName = "1st MEU Flags";
-        scopeCurator = 2;
-        scopeeditor = 2;
-    };
 	class MEU_Objects
     {   
         displayName = "1st MEU Objects";
@@ -187,13 +181,25 @@ class CfgEditorSubcategories
 	};
 	class Objects
     {
-		displayName = "Objects";
+		displayName = "Hidden Objects";
         scopeCurator = 2;
         scopeeditor = 2;
 	};
-	class MEU_Walls
+	class todt_obj
     {
-		displayName = "Walls";
+		displayName = "Todt Objects";
+        scopeCurator = 2;
+        scopeeditor = 2;
+	};
+        class pandora_obj
+    {
+		displayName = "Pandora Objects";
+        scopeCurator = 2;
+        scopeeditor = 2;
+	};
+        class Flags
+    {
+		displayName = "Flags";
         scopeCurator = 2;
         scopeeditor = 2;
 	};

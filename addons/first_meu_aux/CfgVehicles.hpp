@@ -44,7 +44,7 @@ class CfgVehicles
     class OPTRE_UNSC_hornet_CAP;
     class OPTRE_UNSC_hornet_CAS;
     class OPTRE_UNSC_hornet;
-	class OPTRE_M313_UNSC;
+    class OPTRE_M313_UNSC;
     class B_parachute;
     class VES_IFV76;
     class VES_IFV76_A;
@@ -63,7 +63,8 @@ class CfgVehicles
     class OPTRE_CTF_Flag_Base;
     class ACE_SelfActions;
     class Man;
-	class House;
+    class House;
+    class B_T_VTOL_01_armed_F;
 
 
     class MEU_SCORPION: VES_M808B_MBT
@@ -206,8 +207,7 @@ class CfgVehicles
     // end meds
     class OPTRE_AV22_Sparrowhawk_Base: Helicopter_Base_H
     {
-        editorCategory = "MEU_cat_air";
-        editorsubCategory = "MEU_sub_rot";
+      
         tf_range=30000;
         weapons[] = {"CMFlareLauncher_Singles"};
 		magazines[] = {"240Rnd_CMFlare_Chaff_Magazine"};
@@ -304,9 +304,9 @@ class CfgVehicles
     };
 	class OPTRE_UNSC_falcon: OPTRE_falcon_base
     {
-        editorCategory = "MEU_cat_air";
-        editorsubCategory = "MEU_sub_rot";
+        
         tf_range = 30000;
+        radarTargetSize = 0.1;
         class pilotCamera
         {
             class OpticsIn
@@ -363,9 +363,10 @@ class CfgVehicles
     };
 	class OPTRE_Pelican_F: Helicopter_Base_H
     {
-        editorCategory = "MEU_cat_air";
-        editorsubCategory = "MEU_sub_rot";
+       
         tf_range=30000;
+        transportSoldier = 16;
+        fuelCapacity = 242;
         class pilotCamera
         {
             class OpticsIn
@@ -596,8 +597,7 @@ class CfgVehicles
     };
     class OPTRE_Hornet_base: Helicopter_Base_H
     {
-        editorCategory = "MEU_cat_air";
-        editorsubCategory = "MEU_sub_rot";
+        
         tf_range=30000;
         class useractions
         {
@@ -690,6 +690,57 @@ class CfgVehicles
 				statement = "0 = this spawn V_FZ_fnc_Afterburners600Disengage";
 				textToolTip = "<t color='#FCE205'>Disengage Afterburners";
 				userActionID = 55;
+			};
+        };
+    };
+        class MEU_Blackfish: B_T_VTOL_01_armed_F
+    {
+        editorCategory = "MEU_cat_air";
+        editorsubCategory = "MEU_sub_rot";
+        displayName = "Pegasus Blackfish";
+        armor = 1250;
+        damageResistance = 0.00055;
+        tf_range=30000;
+        hiddenSelections[] ={
+			"Camo_1",
+			"Camo_2",
+			"Camo_3", 
+			"Camo_4"
+		};
+        hiddenSelectionsTextures[] = 
+		{
+		"first_meu_aux\data\pegasus\vic\esp_blackfish_1.paa",
+		"first_meu_aux\data\pegasus\vic\esp_blackfish_2_ala31.paa", 
+		"first_meu_aux\data\pegasus\vic\esp_blackfish_3.paa",
+		"first_meu_aux\data\pegasus\vic\esp_blackfish_4.paa"
+		};
+        class useractions
+        {
+                        class Ramp_Open
+			{
+				userActionID = 60;
+				displayName = "$STR_ACTION_RAMP_OPEN0";
+				textToolTip = "$STR_ACTION_RAMP_OPEN0";
+				displayNameDefault = "<img image='\A3\Ui_f\data\IGUI\Cfg\Actions\open_door_ca.paa' size='2.5' />";
+				position = "";
+				condition = "this doorPhase ""Door_1_source"" < 0.5 AND Alive(this) && ({player == _x} count [driver this, this turretUnit [0], this turretUnit [3], this turretUnit [4]] > 0) && ((this getVariable ['bis_disabled_Ramp',0]) != 1)";
+				statement = "this animateDoor ['Door_1_source', 1]";
+				priority = 1.5;
+				radius = 15;
+				radiusView = 0.2;
+				showIn3D = 17;
+				available = 0;
+				showWindow = 0;
+				onlyForPlayer = 1;
+				shortcut = "";
+			};
+			class Ramp_Close: Ramp_Open
+			{
+				userActionID = 61;
+				displayName = "$STR_ACTION_RAMP_CLOSE0";
+				textToolTip = "$STR_ACTION_RAMP_CLOSE0";
+				condition = "this doorPhase ""Door_1_source"" > 0.5 AND Alive(this) && ({player == _x} count [driver this, this turretUnit [0], this turretUnit [3], this turretUnit [4]] > 0) && ((this getVariable ['bis_disabled_Ramp',0]) != 1)";
+				statement = "this animateDoor ['Door_1_source', 0]";
 			};
         };
     };
@@ -5432,7 +5483,8 @@ class CfgVehicles
         displayName ="Praetorian 3-1 CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_redODST31_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     }; 
 
     class 1stMEU_CTF_Flag_Prae2 : OPTRE_CTF_Flag_Base
@@ -5442,7 +5494,8 @@ class CfgVehicles
         displayName ="Praetorian 3-2 CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_blueODST32_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     }; 
 
     class 1stMEU_CTF_Flag_Prae3 : OPTRE_CTF_Flag_Base
@@ -5452,7 +5505,8 @@ class CfgVehicles
         displayName ="Praetorian 3-3 CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_greenODST33_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
     class 1stMEU_CTF_Flag_1stMEU : OPTRE_CTF_Flag_Base
@@ -5462,7 +5516,8 @@ class CfgVehicles
         displayName ="1st MEU CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_red1stmeu_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
     class 1stMEU_CTF_Flag_1stPlt : OPTRE_CTF_Flag_Base
@@ -5472,7 +5527,8 @@ class CfgVehicles
         displayName ="1st Platoon CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_yellow1stplt_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
     class 1stMEU_CTF_Flag_2ndPlt : OPTRE_CTF_Flag_Base
@@ -5483,7 +5539,8 @@ class CfgVehicles
         displayName ="2nd Platoon CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_yellow2ndplt_co.paa"};
-        editorCategory = "MEU_flags";
+                editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
     class 1stMEU_CTF_Flag_Hammer : OPTRE_CTF_Flag_Base
@@ -5494,7 +5551,8 @@ class CfgVehicles
         displayName ="Vulcan 4-1 CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_hammer_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
      class 1stMEU_CTF_Flag_Anvil : OPTRE_CTF_Flag_Base
@@ -5505,7 +5563,8 @@ class CfgVehicles
         displayName ="Vulcan 4-2 CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_anvil_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
     class 1stMEU_CTF_Flag_Forge : OPTRE_CTF_Flag_Base
@@ -5516,7 +5575,8 @@ class CfgVehicles
         displayName ="Vulcan 4-3 CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_purpleforge_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
      class 1stMEU_CTF_Flag_Guardian : OPTRE_CTF_Flag_Base
@@ -5527,7 +5587,8 @@ class CfgVehicles
         displayName ="Vulcan 4-Mike CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_guardian_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
      class 1stMEU_CTF_Flag_Gladius : OPTRE_CTF_Flag_Base
@@ -5538,7 +5599,8 @@ class CfgVehicles
         displayName ="Vulcan 4-0 CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_gladius_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
     
      class 1stMEU_CTF_Flag_VulcanHQ : OPTRE_CTF_Flag_Base
@@ -5549,7 +5611,8 @@ class CfgVehicles
         displayName ="4th Platoon CTF Flag";
         hiddenSelections[] = {"camo1"};
         hiddenSelectionsTextures[] = {"first_meu_aux\data\Misc\flag_guidon_vulcanhq_co.paa"};
-		editorCategory = "MEU_flags";
+		editorCategory = "MEU_Objects";
+		editorSubcategory = "Flags";
     };
 	class SuperWall_01: House
     {
@@ -5564,7 +5627,7 @@ class CfgVehicles
         };
         displayName = "District Superwall";
         editorCategory = "MEU_Objects";
-        editorSubcategory = "MEU_Walls";
+        editorSubcategory = "Objects";
         scope = 2;
         scopeCurator = 2;
         model = "OPTRE_Buildings\Walls\SuperWall_Straight.p3d";
@@ -5595,4 +5658,9033 @@ class CfgVehicles
         simulation = "house";
         side = 4;
     };
+class skuObject: House
+    {
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "Sky Object";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "Objects";
+        scope = 2;
+        scopeCurator = 2;
+        model = "OPTRE_Blood\Buildings\HorizionPlanet\skyObject.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+
+// Todt Obj
+// Todt Obj
+// Todt Obj
+// Todt Obj
+// Todt Obj
+
+class accordeongate: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "accordeongate";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\accordeongate.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase04: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase04";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase04.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase05: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase05";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase05.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase06: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase06";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase06.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase07: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase07";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase07.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase08: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase08";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase08.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase09: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase09";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase09.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase10: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase10";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase10.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase11: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase11";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase11.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase12: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase12";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase12.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase13: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase13";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase13.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase14: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase14";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase14.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase15: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase15";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase15.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase16: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase16";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase16.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase17: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase17";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase17.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase18: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase18";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase18.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase19: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase19";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase19.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase20: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase20";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase20.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase21: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase21";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase21.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase22: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase22";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase22.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase23: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase23";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase23.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase24: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase24";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase24.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase25: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase25";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase25.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase26: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase26";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase26.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase27: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase27";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase27.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase28: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase28";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase28.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbase29: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbase29";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbase29.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class airbaseradioroom: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "airbaseradioroom";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\airbaseradioroom.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class ammocartger: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "ammocartger";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\ammocartger.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class ammocrate01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "ammocrate01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\ammocrate01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class ammodora: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "ammodora";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\ammodora.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class ammoger01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "ammoger01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\ammoger01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class atombomb: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "atombomb";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\atombomb.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class barracksgerman: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "barracksgerman";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\barracksgerman.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class baseconcrete: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "baseconcrete";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\baseconcrete.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class baseconcrete2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "baseconcrete2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\baseconcrete2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class basemetal: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "basemetal";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\basemetal.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class battleship: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "battleship";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\battleship.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class battleship2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "battleship2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\battleship2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class battleshipcrane: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "battleshipcrane";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\battleshipcrane.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class battleshipgun: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "battleshipgun";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\battleshipgun.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class beam01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "beam01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\beam01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class beam02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "beam02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\beam02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class beam03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "beam03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\beam03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class beam04: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "beam04";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\beam04.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class beam05: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "beam05";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\beam05.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class beam06: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "beam06";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\beam06.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class Bedmatres: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "Bedmatres";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\Bedmatres.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bloodrags: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bloodrags";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bloodrags.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bookshelf01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bookshelf01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bookshelf01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bridgerail01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bridgerail01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bridgerail01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk1: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk10: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk10";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk10.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk11: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk11";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk11.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk12: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk12";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk12.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk13: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk13";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk13.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk15: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk15";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk15.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk16: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk16";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk16.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk17: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk17";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk17.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk18: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk18";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk18.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk19: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk19";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk19.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk20: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk20";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk20.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk21: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk21";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk21.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk22: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk22";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk22.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk23: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk23";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk23.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk3: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk4: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk4";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk4.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk5: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk5";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk5.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk6: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk6";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk6.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk7: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk7";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk7.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk8: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk8";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk8.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunk9: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunk9";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunk9.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunker1: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunker1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunker1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkerclock: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkerclock";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkerclock.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkerdoor01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkerdoor01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkerdoor01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkerdoor02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkerdoor02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkerdoor02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkerfireext: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkerfireext";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkerfireext.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkergenerator: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkergenerator";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkergenerator.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkerlight: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkerlight";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkerlight.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertank: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertank";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertank.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertank2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertank2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertank2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertrain: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertrain";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertrain.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertrain2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertrain2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertrain2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertrain3: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertrain3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertrain3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertrain4: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertrain4";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertrain4.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertrain5: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertrain5";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertrain5.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class bunkertrain6: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "bunkertrain6";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\bunkertrain6.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class cabinet01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "cabinet01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\cabinet01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class camonet01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "camonet01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\camonet01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class camonet02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "camonet02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\camonet02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class capgerman1: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "capgerman1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\capgerman1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class capgerman2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "capgerman2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\capgerman2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class carrierold: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "carrierold";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\carrierold.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class chain01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "chain01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\chain01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class chain02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "chain02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\chain02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class commanderhat: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "commanderhat";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\commanderhat.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class cookingbox: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "cookingbox";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\cookingbox.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class cookingpot01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "cookingpot01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\cookingpot01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class couch: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "couch";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\couch.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class craneport: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "craneport";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\craneport.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class cranespider: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "cranespider";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\cranespider.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class cratenazi: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "cratenazi";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\cratenazi.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class crocodile: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "crocodile";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\crocodile.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class deadwhale: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "deadwhale";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\deadwhale.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class deskfan: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "deskfan";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\deskfan.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class doorframe01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "doorframe01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\doorframe01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class doorframe02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "doorframe02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\doorframe02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class electricpost01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "electricpost01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\electricpost01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class electricpost02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "electricpost02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\electricpost02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class electricpost03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "electricpost03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\electricpost03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class fieldphone: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "fieldphone";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\fieldphone.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class filecabinet01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "filecabinet01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\filecabinet01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class flak88: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "flak88";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\flak88.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class flakstatic: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "flakstatic";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\flakstatic.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class fusebox01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "fusebox01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\fusebox01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class germanbarrel: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "germanbarrel";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\germanbarrel.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class granadebox: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "granadebox";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\granadebox.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class gunrackground: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "gunrackground";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\gunrackground.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class gunrackwall: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "gunrackwall";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\gunrackwall.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hangarlarge01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hangarlarge01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hangarlarge01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hangingbridge: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hangingbridge";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hangingbridge.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hangingcoat: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hangingcoat";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hangingcoat.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class heavydoor01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "heavydoor01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\heavydoor01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class heavydoor02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "heavydoor02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\heavydoor02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class helmetm40: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "helmetm40";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\helmetm40.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hitlersbunk: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hitlersbunk";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hitlersbunk.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hitlersbunk2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hitlersbunk2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hitlersbunk2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hospitalbed: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hospitalbed";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hospitalbed.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hospitaldivider: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hospitaldivider";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hospitaldivider.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hospitaldivider2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "hospitaldivider2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\hospitaldivider2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class jerrycan01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "jerrycan01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\jerrycan01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class lampger01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "lampger01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\lampger01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class machines01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "machines01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\machines01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class mapboard01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "mapboard01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\mapboard01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class mapboard02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "mapboard02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\mapboard02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class mapboard03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "mapboard03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\mapboard03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class meathanging: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "meathanging";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\meathanging.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class medboxopen: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "medboxopen";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\medboxopen.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class merc01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "merc01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\merc01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class Messerschmitstatic: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "Messerschmitstatic";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\Messerschmitstatic.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class metalcratemed: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "metalcratemed";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\metalcratemed.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class metallocker01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "metallocker01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\metallocker01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class murderhole: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "murderhole";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\murderhole.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class navalbunk: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "navalbunk";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\navalbunk.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class navalbunk2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "navalbunk2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\navalbunk2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi1: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi3: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi4: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi4";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi4.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi5: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi5";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi5.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi6: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi6";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi6.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi7: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi7";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi7.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class nazi8: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "nazi8";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\nazi8.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class naziflag: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "naziflag";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\naziflag.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class naziflag01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "naziflag01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\naziflag01.FBX.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class naziflag2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "naziflag2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\naziflag2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class noticeboard: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "noticeboard";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\noticeboard.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class oldchair01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "oldchair01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\oldchair01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class pantshanging: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "pantshanging";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\pantshanging.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class pipesceeling: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "pipesceeling";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\pipesceeling.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class planebomber: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "planebomber";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\planebomber.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class radar01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "radar01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\radar01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class radar02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "radar02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\radar02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class radioantena: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "radioantena";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\radioantena.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class radioger01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "radioger01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\radioger01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class radioger02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "radioger02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\radioger02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class radioger03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "radioger03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\radioger03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class radioheadset: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "radioheadset";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\radioheadset.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class railgun: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "railgun";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\railgun.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class railgun2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "railgun2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\railgun2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class rationscrate: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "rationscrate";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\rationscrate.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class Ratte: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "Ratte";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\Ratte.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class ratte2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "ratte2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\ratte2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class rattetank: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "rattetank";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\rattetank.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class rig4: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "rig4";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\rig4.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class rig6: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "rig6";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\rig6.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class rig7: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "rig7";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\rig7.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class rip01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "rip01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\rip01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class roofvent01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "roofvent01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\roofvent01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class ropes01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "ropes01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\ropes01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class ropes02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "ropes02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\ropes02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk04: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk04";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk04.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk05: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk05";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk05.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk06: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk06";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk06.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk07: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk07";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk07.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk08: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk08";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk08.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seabunk09: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seabunk09";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seabunk09.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seamine01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "seamine01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\seamine01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class searchlight: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "searchlight";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\searchlight.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class searchlight2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "searchlight2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\searchlight2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sentryguard: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sentryguard";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sentryguard.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class shelfwall01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "shelfwall01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\shelfwall01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class shirthanging: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "shirthanging";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\shirthanging.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class shower01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "shower01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\shower01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign04: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign04";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign04.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign05: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign05";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign05.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign06: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign06";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign06.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign07: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign07";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign07.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign08: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign08";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign08.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign09: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign09";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign09.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign10: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign10";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign10.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign11: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign11";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign11.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign12: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign12";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign12.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign13: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign13";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign13.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign14: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign14";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign14.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign15: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign15";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign15.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign16: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign16";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign16.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign17: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign17";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign17.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign18: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign18";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign18.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign19: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign19";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign19.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign20: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign20";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign20.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign21: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign21";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign21.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign22: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign22";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign22.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sign23: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sign23";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sign23.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sluza: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sluza";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sluza.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sluza2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sluza2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sluza2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sluza3: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "sluza3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\sluza3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class subpassage: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "subpassage";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\subpassage.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class supplyship: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "supplyship";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\supplyship.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tableoffice01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "tableoffice01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\tableoffice01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tankership: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "tankership";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\tankership.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tankstand: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "tankstand";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\tankstand.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tankstand2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "tankstand2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\tankstand2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class weirdtemplate: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "template";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\template.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class toolsbox01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "toolsbox01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\toolsbox01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class torpedo01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "torpedo01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\torpedo01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class torpedo02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "torpedo02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\torpedo02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class torpedoboat: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "torpedoboat";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\torpedoboat.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class trainboxcar: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "trainboxcar";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\trainboxcar.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class trainmain: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "trainmain";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\trainmain.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class trainyardcover01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "trainyardcover01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\trainyardcover01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class trainyardcover02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "trainyardcover02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\trainyardcover02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class transportship: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "transportship";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\transportship.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class uboot1: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "uboot1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\uboot1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker04: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker04";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker04.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker05: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker05";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker05.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker06: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker06";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker06.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker07: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker07";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker07.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker08: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker08";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker08.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker09: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker09";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker09.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker10: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker10";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker10.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker11: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker11";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker11.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker12: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker12";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker12.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker13: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker13";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker13.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker14: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker14";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker14.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker15: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker15";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker15.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker16: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker16";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker16.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker17: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker17";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker17.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker18: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker18";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker18.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class v2bunker19: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "v2bunker19";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\v2bunker19.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class V2rocket: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "V2rocket";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\V2rocket.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class V2rocket2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "V2rocket2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\V2rocket2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class V2rocket3: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "V2rocket3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\V2rocket3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class vent01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "vent01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\vent01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class vent02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "vent02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\vent02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class warehouse1: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "warehouse1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\warehouse1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class warehouse2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "warehouse2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\warehouse2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class warehouse3: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "warehouse3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\warehouse3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class warehouse4walkway: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "warehouse4walkway";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\warehouse4walkway.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class waterpump01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "waterpump01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\waterpump01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class watertowernew: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "watertowernew";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\watertowernew.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class weaponstable: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "weaponstable";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\weaponstable.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wires01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wires01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wires01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wires02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wires02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wires02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wires03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wires03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wires03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl02: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl02";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl02.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl03: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl03";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl03.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl04: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl04";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl04.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl05: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl05";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl05.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl06: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl06";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl06.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl07: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl07";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl07.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl08: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl08";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl08.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl09: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl09";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl09.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl10: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl10";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl10.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl11: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl11";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl11.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl12: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl12";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl12.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl13: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl13";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl13.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl14: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl14";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl14.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl15: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl15";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl15.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class wl16: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "wl16";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\wl16.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class woodsilo01: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "woodsilo01";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\woodsilo01.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class woodsupport: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "woodsupport";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\woodsupport.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class zeppelin: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "zeppelin";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\zeppelin.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class zeppelinbunk: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "zeppelinbunk";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\zeppelinbunk.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class zeppelinbunker1: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "zeppelinbunker1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\zeppelinbunker1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class zeppelinbunker2: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "zeppelinbunker2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\zeppelinbunker2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class zeppelinlarge: House
+    {
+        
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "''";
+        };
+        displayName = "zeppelinlarge";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "todt_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Todtcustom\zeppelinlarge.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+
+// Pandora Obj
+// Pandora Obj
+// Pandora Obj
+// Pandora Obj
+
+class aircleaner: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "aircleaner";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\aircleaner.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class aprocesor: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "aprocesor";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\aprocesor.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class arturtower: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "arturtower";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\arturtower.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class beacon: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "beacon";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\beacon.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class cablecar: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "cablecar";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\cablecar.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class cablecarbase: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "cablecarbase";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\cablecarbase.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class conelanding: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "conelanding";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\conelanding.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class connector: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "connector";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\connector.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class connectordome: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "connectordome";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\connectordome.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class digramp: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "digramp";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\digramp.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class digwall: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "digwall";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\digwall.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class flattop: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "flattop";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\flattop.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class foil: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "foil";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\foil.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class foil2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "foil2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\foil2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class glasswall: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "glasswall";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\glasswall.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class glasswall2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "glasswall2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\glasswall2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class greenhouse: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "greenhouse";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\greenhouse.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class greenhouse2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "greenhouse2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\greenhouse2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class greenhouse3: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "greenhouse3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\greenhouse3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class habitat: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "habitat";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\habitat.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class habitat2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "habitat2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\habitat2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class habitat3: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "habitat3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\habitat3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class habitat4x: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "habitat4x";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\habitat4x.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class habitatground1: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "habitatground1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\habitatground1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class habitatground2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "habitatground2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\habitatground2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class habitatgroundwalk: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "habitatgroundwalk";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\habitatgroundwalk.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hangarlarge: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "hangarlarge";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\hangarlarge.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class hardwall: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "hardwall";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\hardwall.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class landingpad: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "landingpad";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\landingpad.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class landingpad2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "landingpad2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\landingpad2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milbarrier: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milbarrier";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milbarrier.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milconnector: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milconnector";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milconnector.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class mildish: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "mildish";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\mildish.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milhab2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milhab2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milhab2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milhabitat: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milhabitat";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milhabitat.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milhabitat4: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milhabitat4";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milhabitat4.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milhangarground: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milhangarground";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milhangarground.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milhangarsky: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milhangarsky";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milhangarsky.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milhangarsky2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milhangarsky2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milhangarsky2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class militaryb1: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "militaryb1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\militaryb1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class militarytower: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "militarytower";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\militarytower.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milseabase: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milseabase";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milseabase.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milseabase2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milseabase2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milseabase2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milseabase3: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milseabase3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milseabase3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milwall: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milwall";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milwall.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class milwallgate: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "milwallgate";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\milwallgate.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class minedeadspace: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "minedeadspace";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\minedeadspace.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class minedeadspace2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "minedeadspace2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\minedeadspace2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class minedeadspace3: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "minedeadspace3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\minedeadspace3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class minerings: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "minerings";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\minerings.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class minetanks: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "minetanks";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\minetanks.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class minetop: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "minetop";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\minetop.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class monolith: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "monolith";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\monolith.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class oretransport: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "oretransport";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\oretransport.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class pool: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "pool";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\pool.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class procesor: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "procesor";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\procesor.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class runwaysifi: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "runwaysifi";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\runwaysifi.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class seafarm: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "seafarm";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\seafarm.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sifiwall: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "sifiwall";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\sifiwall.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skyhouse: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skyhouse";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skyhouse.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skyhouse2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skyhouse2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skyhouse2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skyhouse3: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skyhouse3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skyhouse3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skyhouse4: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skyhouse4";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skyhouse4.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skyhousebase: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skyhousebase";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skyhousebase.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skylift: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skylift";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skylift.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skywalk: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skywalk";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skywalk.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skywalk3: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skywalk3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skywalk3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class skywalkheli: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "skywalkheli";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\skywalkheli.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class spacefarm: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "spacefarm";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\spacefarm.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sphere: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "sphere";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\sphere.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sphere2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "sphere2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\sphere2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class spheregreenhouse: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "spheregreenhouse";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\spheregreenhouse.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sphereoutpost: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "sphereoutpost";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\sphereoutpost.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sulaco: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "sulaco";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\sulaco.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class sulaco1: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "sulaco1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\sulaco1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class template: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "template";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\template.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tn1: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "tn1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\tn1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tn2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "tn2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\tn2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tn3: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "tn3";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\tn3.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tubehabitat1: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "tubehabitat1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\tubehabitat1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tubehabitat2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "tubehabitat2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\tubehabitat2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class tubehabitat4: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "tubehabitat4";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\tubehabitat4.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class undwaterhab1: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "undwaterhab1";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\undwaterhab1.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class undwaterhab2: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "undwaterhab2";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\undwaterhab2.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class walkplatform: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "walkplatform";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\walkplatform.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class watchsifi: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "watchsifi";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\watchsifi.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class waterbase: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "waterbase";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\waterbase.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class waterbasewalk: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "waterbasewalk";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\waterbasewalk.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class waterdock: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "waterdock";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\waterdock.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class waterhabitat: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "waterhabitat";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\waterhabitat.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+class whitewall: House
+    {
+        category = "Hidden MEU_Objects";
+        class SimpleObject
+        {
+            eden = 1;
+            animate[] = {};
+            hide[] = {};
+            verticalOffset = 1.361;
+            verticalOffsetWorld = 0;
+            init = "";
+        };
+        displayName = "whitewall";
+        editorCategory = "MEU_Objects";
+        editorSubcategory = "pandora_obj";
+        scope = 2;
+        scopeCurator = 2;
+        model = "Pandoracustom\whitewall.p3d";
+        destrType = "DestructTree";
+        selectionDamage = "zbytek";
+        simulation = "house";
+        side = 4;
+    };
+
 };
