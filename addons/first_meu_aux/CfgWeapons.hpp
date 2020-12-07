@@ -93,31 +93,49 @@ class CfgWeapons
 			mass = 16;
         };
     };
-    class MEU_Biofoam: OPTRE_Biofoam
+    class MEU_Heavy_Biofoam: OPTRE_Biofoam
     {
         scope = 2;
-        displayName = "[P] Biofoam Canister";
+        displayName = "[1st MEU] Biofoam Heavy Canister";
         class ItemInfo: ItemInfo
 		{
 			mass = 35;
+        };
+    };
+    class MEU_Heavy_Medigel: OPTRE_Medigel
+    {
+        scope = 2;
+        displayName = "[1st MEU] Optican Heavy Medigel";
+        class ItemInfo: ItemInfo
+		{
+			mass = 35;
+        };
+    };
+	class MEU_Biofoam: OPTRE_Biofoam
+    {
+        scope = 2;
+        displayName = "[1st MEU] Biofoam Canister";
+        class ItemInfo: ItemInfo
+		{
+			mass = 2;
         };
     };
     class MEU_Medigel: OPTRE_Medigel
     {
         scope = 2;
-        displayName = "[P] Optican Medigel";
+        displayName = "[1st MEU] Optican Medigel";
         class ItemInfo: ItemInfo
 		{
-			mass = 35;
+			mass = 2;
         };
     };
 	class MEU_tourniquet : ACE_tourniquet 
     {
         scope = 1;
-        displayName = " [P] Armor Patch"; 
+        displayName = "Armor Patch"; 
         class ItemInfo: CBA_MiscItem_ItemInfo 
         {
-            mass = 0.5;
+            mass = 1;
         };
     };
 	
@@ -13001,7 +13019,7 @@ class Pilot_Recruit: 1MEU_BASE_Pilot_Armor
     
     class Throw : GrenadeLauncher
 	{
-		muzzles[] += {"MEU_C7_Muzzle","MEU_C12_Muzzle","MEU_9bang_Muzzle","MEU_C168_Muzzle","MEU_Fury_Muzzle",};
+		muzzles[] += {"MEU_C7_Muzzle","MEU_C12_Muzzle","MEU_9bang_Muzzle","MEU_M168_Muzzle","MEU_Fury_Muzzle",};
 		class MEU_C7_Muzzle : ThrowMuzzle
 		{
             reloadtime = 0;
@@ -13017,10 +13035,10 @@ class Pilot_Recruit: 1MEU_BASE_Pilot_Armor
             reloadtime = 0;
 			magazines[] = {"MEU_9bang_Mag"};
 		};
-        class MEU_C168_Muzzle : ThrowMuzzle
+        class MEU_M168_Muzzle : ThrowMuzzle
 		{
             reloadtime = 0;
-			magazines[] = {"MEU_C168_Mag"};
+			magazines[] = {"MEU_M168_Mag"};
 		};
 		class MEU_Fury_Muzzle : ThrowMuzzle
 		{
@@ -13108,7 +13126,7 @@ class Pilot_Recruit: 1MEU_BASE_Pilot_Armor
 		model = "\OPTRE_Weapons\MG\M247.p3d";
 		displayName = "M250 Heavy Machine Gun";
 		descriptionShort = "UNSC Heavy Machine Gun (man portable)";
-		magazines[] = {"OPTRE_100Rnd_127x99_M250HMG", "OPTRE_100Rnd_127x99_HE_M250HMG"};
+		magazines[] = {"OPTRE_100Rnd_127x99_M250HMG", "OPTRE_100Rnd_127x99_HE_M250HMG", "OPTRE_100Rnd_127x99_TRACER_M250HMG", "OPTRE_100Rnd_127x99_TRACER_HE_M250HMG"};
 		recoil = "recoil_trg21";
 		baseWeapon = "M250HMG";
 		HUD_BulletInARows = 2;

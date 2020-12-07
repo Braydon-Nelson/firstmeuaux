@@ -75,13 +75,13 @@ class CfgAmmo
         ace_flashbang_Interval = 0.1;
     };
 	
-    class MEU_C168_ammo_thrown : ACE_SatchelCharge_Remote_Ammo_Thrown
+    class MEU_M168_ammo_thrown : ACE_SatchelCharge_Remote_Ammo_Thrown
     {
         scope = 1;
         hit = 9500;
 		indirectHit = 9000;
 		indirectHitRange = 10;
-		defaultMagazine = "MEU_C168_Mag"; 
+		defaultMagazine = "MEU_M168_Mag"; 
 		model = "\OPTRE_Weapons\charges\m168g.p3d";
         timeToLive = 15;
         fuseDistance = 0;
